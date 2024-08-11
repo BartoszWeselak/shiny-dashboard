@@ -11,7 +11,6 @@ app_ui = ui.page_fluid(
 
     ui.input_action_button("calc_button", "Calculate"),
     ui.output_text_verbatim("result"),
-    ui.output_text_verbatim("test"),
 
 )
 
@@ -26,9 +25,14 @@ def server(input, output, session):
         period_months = input.num3()
         capitalization = 12
         period_years = period_months / 12
-        sum_result = deposit * (1 + (interest_rate / capitalization)) ** (capitalization * period_years)
+        profit = deposit * (1 + (interest_rate / capitalization)) ** (capitalization * period_years)
+        tax=calc_tax(deposit,profit)
+        sum_after_tax=profit-tax
+        return f"profit: {profit}\ntax: {tax}\nsum after tax(19%): {sum_after_tax}"
 
-        return f"Result: {sum_result}"
+    def calc_tax(deposit,profit):
+        tax=(profit-deposit)*0.19
+        return tax
 
     @output
     @render.text
