@@ -1,30 +1,39 @@
-from shiny import App, render, ui
+from shiny import App, render, ui, reactive
 
+# Definiujemy interfejs użytkownika
 app_ui = ui.page_fluid(
-    ui.head_content(
-        ui.tags.link(
-            rel="stylesheet", href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-        )
-    ),
-    ui.tags.div(
-        ui.h2("Hello, Shiny for Python!", class_="text-xl bg-gray-200 text-center my-4")
-    ),
-    ui.tags.div(
-        ui.input_slider("n", "Number of bins", 10, 100, 20)
-    ),
-    ui.tags.div(
-        ui.p("text")
-    )
+
+    ui.input_numeric("num1", "Deposit:",0),
+
+    ui.input_numeric("num2", "interest rate(%):",0),
+
+    ui.input_numeric("num3", "period(months:",0),
+
+    ui.input_action_button("calc_button", "Calculate"),
+    ui.output_text_verbatim("result"),
+    ui.output_text_verbatim("test"),
+
 )
 
+# Definiujemy funkcje serwera
 def server(input, output, session):
     @output
     @render.text
-    def text():
-        return f"Number of bins selected: {input.n()}"
+    @reactive.event(input.calc_button)  # Zdarzenie aktywujące renderowanie
+    def result():
+        deposit = input.num1()
+        interest_rate = input.num2() / 100
+        period_months = input.num3()
+        capitalization = 12
+        period_years = period_months / 12
+        sum_result = deposit * (1 + (interest_rate / capitalization)) ** (capitalization * period_years)
 
+        return f"Result: {sum_result}"
+
+    @output
+    @render.text
+    def test():
+        return "test"
 app = App(app_ui, server)
-
 if __name__ == "__main__":
     app.run()
-
