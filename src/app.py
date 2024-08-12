@@ -1,15 +1,17 @@
 from shiny import App, render, ui, reactive
-from shinyswatch import theme
-
+import shinyswatch
 app_ui = ui.page_fluid(
+    shinyswatch.theme_picker_ui(),
     ui.page_navbar(
         ui.nav_panel("A", "Page A content"),
         ui.nav_panel("B", "Page B content"),
         ui.nav_panel("C", "Page C content"),
-        title="App with navbar",
+        title="DepositPol",
         id="page",
 
     ),
+
+
 
     ui.div(
     ui.h2("Interest Calculation Dashboard", style="text-align: center; margin-bottom: 30px;"),
@@ -29,6 +31,7 @@ app_ui = ui.page_fluid(
 
         )
     ),
+
     ui.panel_well(
        ui.row(
            ui.p("test"),
@@ -37,13 +40,15 @@ app_ui = ui.page_fluid(
 
        ),
     ),
-    style="background-color: #d4fdff;"
+
 
     ),
     )
 
 
 def server(input, output, session):
+    shinyswatch.theme_picker_server()
+
     @output
     @render.text
     @reactive.event(input.calc_button)
