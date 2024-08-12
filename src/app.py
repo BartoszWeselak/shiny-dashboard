@@ -1,21 +1,18 @@
 from shiny import App, render, ui, reactive
 import shinyswatch
+
+
+
 app_ui = ui.page_fluid(
-    shinyswatch.theme_picker_ui(),
+
     ui.page_navbar(
-        ui.nav_panel("A", "Page A content"),
-        ui.nav_panel("B", "Page B content"),
-        ui.nav_panel("C", "Page C content"),
+        ui.nav_panel(ui.div( shinyswatch.theme_picker_ui(), style="text-align: center;")),
         title="DepositPol",
         id="page",
-
     ),
-
-
 
     ui.div(
     ui.h2("Interest Calculation Dashboard", style="text-align: center; margin-bottom: 30px;"),
-
     ui.panel_well(
         ui.row(
             ui.column(4, ui.input_numeric("deposit", "Deposit:", 0, width="100%")),
@@ -28,21 +25,10 @@ app_ui = ui.page_fluid(
           ui.output_text_verbatim("profit", placeholder=True),
           ui.output_text_verbatim("tax", placeholder=True),
           ui.output_text_verbatim("sum_after_tax", placeholder=True),
-
         )
     ),
-
-    ui.panel_well(
-       ui.row(
-           ui.p("test"),
-           ui.p("test"),
-           ui.p("test"),
-
-       ),
     ),
-
-
-    ),
+    theme=shinyswatch.theme.cosmo()
     )
 
 
@@ -69,9 +55,6 @@ def server(input, output, session):
     @reactive.event(input.calc_button)
     def profit():
         return calc_profit( input.deposit(),(input.intrest() / 100),input.period())
-
-
-
 
 def calc_profit(deposit, interest_rate,period_months):
     capitalization = 12
