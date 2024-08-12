@@ -20,11 +20,21 @@ app_ui = ui.page_fluid(
             ui.column(4, ui.input_numeric("period", "Period (Months):", 0, width="100%")),
         ),
         ui.input_action_button("calc_button", "Calculate", style="margin-top: 20px; width: 100%;"),
-        ui.row(
+
           ui.h3("Calculation Results", style="margin-top: 20px; text-align: center;"),
-          ui.output_text_verbatim("profit", placeholder=True),
-          ui.output_text_verbatim("tax", placeholder=True),
-          ui.output_text_verbatim("sum_after_tax", placeholder=True),
+    ui.layout_columns(
+        ui.card(
+            ui.h3("Profit"),
+            ui.output_text_verbatim("profit", placeholder=True),
+        ),
+        ui.card(
+            ui.h3("Tax"),
+            ui.output_text_verbatim("tax", placeholder=True),
+        ),
+        ui.card(
+            ui.h3("After Tax"),
+            ui.output_text_verbatim("sum_after_tax", placeholder=True),
+        ),
         )
     ),
     ),
