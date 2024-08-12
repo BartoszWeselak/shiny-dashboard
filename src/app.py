@@ -1,6 +1,15 @@
 from shiny import App, render, ui, reactive
 
 app_ui = ui.page_fluid(
+    ui.page_navbar(
+        ui.nav_panel("A", "Page A content"),
+        ui.nav_panel("B", "Page B content"),
+        ui.nav_panel("C", "Page C content"),
+        title="App with navbar",
+        id="page",
+    ),
+
+
     ui.h2("Interest Calculation Dashboard", style="text-align: center; margin-bottom: 30px;"),
 
     ui.panel_well(
