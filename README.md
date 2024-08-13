@@ -1,6 +1,4 @@
 # shiny-dashboard
 
 ## shinyapps.io
-```
-https://toszek.shinyapps.io/depositpol/
-```
+[Link to website on shinyapps.io](https://toszek.shinyapps.io/depositpol/)  
