@@ -1,5 +1,6 @@
 from shiny import App, render, ui, reactive
 import shinyswatch
+import matplotlib.pyplot as plt
 
 
 
@@ -17,7 +18,7 @@ app_ui = ui.page_fluid(
     ui.panel_well(
         ui.row(
             ui.column(4, ui.input_numeric("deposit", "Deposit:", 0, width="100%")),
-            ui.column(4, ui.input_numeric("intrest", "Interest Rate (%):", 0, width="100%")),
+            ui.column(4, ui.input_numeric("interest", "Interest Rate (%):", 0, width="100%")),
             ui.column(4, ui.input_numeric("period", "Period (Months):", 0, width="100%")),
         ),
         ui.input_action_button("calc_button", "Calculate", style="margin-top: 20px; width: 100%;"),
@@ -37,6 +38,8 @@ app_ui = ui.page_fluid(
             ui.output_text_verbatim("sum_after_tax", placeholder=True),
         ),
         ),
+
+        ui.output_plot("plot"),
     ),
     style="text-align: center;width:80%;margin-left:10%;"
     ),
@@ -52,7 +55,7 @@ def server(input, output, session):
     @render.text
     @reactive.event(input.calc_button)
     def sum_after_tax():
-        profit=calc_profit( input.deposit(),(input.intrest() / 100),input.period())
+        profit=calc_profit( input.deposit(),(input.interest() / 100),input.period())
         tax=calc_tax(profit, input.deposit())
         return profit-tax
 
@@ -60,14 +63,49 @@ def server(input, output, session):
     @render.text
     @reactive.event(input.calc_button)
     def tax():
-        profit=calc_profit(input.deposit(), (input.intrest() / 100), input.period())
+        profit=calc_profit(input.deposit(), (input.interest() / 100), input.period())
         return calc_tax(profit, input.deposit())
 
     @output
     @render.text
     @reactive.event(input.calc_button)
     def profit():
-        return calc_profit( input.deposit(),(input.intrest() / 100),input.period())
+        return calc_profit( input.deposit(),(input.interest() / 100),input.period())
+
+    @render.plot(alt="A histogram")
+    @reactive.event(input.calc_button)
+    def plot():
+        deposit = input.deposit()
+        interest_rate = input.interest() / 100
+        period = input.period()
+
+        # profit = calc_profit(deposit, interest_rate, period)
+        # tax = calc_tax(profit, deposit)
+        # after_tax = profit - tax
+        print(deposit)
+        categories = ['Deposit', 'Profit', 'Tax', 'After Tax']
+        values = [0, 0, 0, 0]
+
+        fig, ax = plt.subplots()
+        ax.bar(categories, values)
+
+        ax.set_xlabel('Category')
+        ax.set_ylabel('Value($)')
+        ax.set_title('Value distribution')
+
+
+        return fig
+def create_plot():
+    x = ['A', 'B', 'C']
+    y = [10, 20, 15]
+
+    fig, ax = plt.subplots()
+    ax.bar(x, y)
+
+    ax.set_xlabel('Category')
+    ax.set_ylabel('Value($)')
+    ax.set_title('Value distribution')
+    return fig
 
 def calc_profit(deposit, interest_rate,period_months):
     capitalization = 12
