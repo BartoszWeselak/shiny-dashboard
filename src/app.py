@@ -79,21 +79,25 @@ def server(input, output, session):
         interest_rate = input.interest() / 100
         period = input.period()
 
-        # profit = calc_profit(deposit, interest_rate, period)
-        # tax = calc_tax(profit, deposit)
-        # after_tax = profit - tax
-        print(deposit)
+        profit = calc_profit(deposit, interest_rate, period)
+        tax = calc_tax(profit, deposit)
+        after_tax = profit - tax
+
         categories = ['Deposit', 'Profit', 'Tax', 'After Tax']
-        values = [0, 0, 0, 0]
+        values = [deposit, profit, tax, after_tax]
 
         fig, ax = plt.subplots()
-        ax.bar(categories, values)
+
+        bars = ax.bar(categories, values, color=['blue', 'green', 'red', 'orange'])
+
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width() / 2, height, f'{height:.2f}',
+                    ha='center', va='bottom')
 
         ax.set_xlabel('Category')
-        ax.set_ylabel('Value($)')
-        ax.set_title('Value distribution')
-
-
+        ax.set_ylabel('Value ($)')
+        ax.set_title('Value Distribution')
         return fig
 def create_plot():
     x = ['A', 'B', 'C']
