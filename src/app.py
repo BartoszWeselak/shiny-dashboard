@@ -4,11 +4,12 @@ import shinyswatch
 
 
 app_ui = ui.page_fluid(
-
+    ui.include_css("styles.css"),
     ui.page_navbar(
-        ui.nav_panel(ui.div( shinyswatch.theme_picker_ui(), style="text-align: center;")),
+        ui.nav_panel(ui.div( shinyswatch.theme_picker_ui(), style="text-align: center;text-decoration:none")),
         title="DepositPol",
         id="page",
+
     ),
 
     ui.div(
@@ -35,10 +36,12 @@ app_ui = ui.page_fluid(
             ui.h3("After Tax"),
             ui.output_text_verbatim("sum_after_tax", placeholder=True),
         ),
-        )
+        ),
     ),
+    style="text-align: center;width:80%;margin-left:10%;"
     ),
-    theme=shinyswatch.theme.cosmo()
+    theme=shinyswatch.theme.cosmo(),
+
     )
 
 
