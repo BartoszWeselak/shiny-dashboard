@@ -10,7 +10,7 @@ simple website for calculating future values of deposits.
 -shinyswatch theme picker  
 -future value and tax display  
 
-##reqs
+## reqs
 Python 3.10.4  
 matplotlib 3.9.2  
 shiny 1.0.0  
