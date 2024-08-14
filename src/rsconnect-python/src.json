@@ -1,0 +1,12 @@
+{
+    "https://api.shinyapps.io": {
+        "server_url": "https://api.shinyapps.io",
+        "filename": "C:\\Users\\BW\\Desktop\\misc\\shiny-dashboard\\src",
+        "app_url": "https://toszek.shinyapps.io/depositpol/",
+        "app_id": 12448331,
+        "app_guid": null,
+        "title": "Depositpol",
+        "app_mode": "python-shiny",
+        "app_store_version": 1
+    }
+}

@@ -2,8 +2,8 @@ from shiny import App, render, ui, reactive
 import shinyswatch
 import matplotlib.pyplot as plt
 
-
-
+currency="zł"
+tax_rate=0.19
 app_ui = ui.page_fluid(
     ui.include_css("styles.css"),
     ui.page_navbar(
@@ -17,6 +17,7 @@ app_ui = ui.page_fluid(
     ui.h2("Interest Calculation Dashboard", style="text-align: center; margin-bottom: 30px;"),
     ui.panel_well(
         ui.row(
+
             ui.column(4, ui.input_numeric("deposit", "Deposit:", 0, width="100%")),
             ui.column(4, ui.input_numeric("interest", "Interest Rate (%):", 0, width="100%")),
             ui.column(4, ui.input_numeric("period", "Period (Months):", 0, width="100%")),
@@ -57,20 +58,20 @@ def server(input, output, session):
     def sum_after_tax():
         profit=calc_profit( input.deposit(),(input.interest() / 100),input.period())
         tax=calc_tax(profit, input.deposit())
-        return profit-tax
+        return f"{(profit-tax):.2f} {currency}"
 
     @output
     @render.text
     @reactive.event(input.calc_button)
     def tax():
         profit=calc_profit(input.deposit(), (input.interest() / 100), input.period())
-        return calc_tax(profit, input.deposit())
+        return f"{calc_tax(profit, input.deposit()):.2f} {currency}"
 
     @output
     @render.text
     @reactive.event(input.calc_button)
     def profit():
-        return calc_profit( input.deposit(),(input.interest() / 100),input.period())
+        return f"{calc_profit( input.deposit(),(input.interest() / 100),input.period()):.2f} {currency}"
 
     @render.plot(alt="A histogram")
     @reactive.event(input.calc_button)
@@ -92,24 +93,14 @@ def server(input, output, session):
 
         for bar in bars:
             height = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width() / 2, height, f'{height:.2f}',
+            ax.text(bar.get_x() + bar.get_width() / 2, height, f'{height:.2f} {currency}',
                     ha='center', va='bottom')
 
         ax.set_xlabel('Category')
-        ax.set_ylabel('Value ($)')
+        ax.set_ylabel('Value (zł)')
         ax.set_title('Value Distribution')
         return fig
-def create_plot():
-    x = ['A', 'B', 'C']
-    y = [10, 20, 15]
 
-    fig, ax = plt.subplots()
-    ax.bar(x, y)
-
-    ax.set_xlabel('Category')
-    ax.set_ylabel('Value($)')
-    ax.set_title('Value distribution')
-    return fig
 
 def calc_profit(deposit, interest_rate,period_months):
     capitalization = 12
@@ -117,7 +108,7 @@ def calc_profit(deposit, interest_rate,period_months):
     profit = deposit * (1 + (interest_rate / capitalization)) ** (capitalization * period_years)
     return profit
 def calc_tax(profit,deposit):
-    tax = (profit - deposit) * 0.19
+    tax = (profit - deposit) * tax_rate
     return tax
 
 app = App(app_ui, server)
