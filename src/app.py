@@ -10,21 +10,29 @@ app_ui = ui.page_fluid(
         ui.nav_panel(ui.div( shinyswatch.theme_picker_ui(), style="text-align: center;text-decoration:none")),
         title="DepositPol",
         id="page",
-
     ),
-
     ui.div(
-    ui.h2("Interest Calculation Dashboard", style="text-align: center; margin-bottom: 30px;"),
     ui.panel_well(
-        ui.row(
+        ui.h2("Interest Calculation Dashboard", style="text-align: center; margin-bottom: 30px;"),
+    ),
+    ui.panel_well(
 
-            ui.column(4, ui.input_numeric("deposit", "Deposit:", 0, width="100%")),
-            ui.column(4, ui.input_numeric("interest", "Interest Rate (%):", 0, width="100%")),
-            ui.column(4, ui.input_numeric("period", "Period (Months):", 0, width="100%")),
+        ui.layout_columns(
+        ui.card(
+            ui.h3(f"Deposit({currency})"),
+            ui.input_numeric("deposit", "Deposit:", 0, width="100%"),
+            ),
+        ui.card(
+            ui.h3("Interest(%)"),
+            ui.input_numeric("interest", "Interest Rate (%):", 0, width="100%"),
+            ),
+        ui.card(
+            ui.h3("Period(months)"),
+            ui.input_numeric("period", "Period (Months):", 0, width="100%"),
+            ),
         ),
-        ui.input_action_button("calc_button", "Calculate", style="margin-top: 20px; width: 100%;"),
-
-          ui.h3("Calculation Results", style="margin-top: 20px; text-align: center;"),
+        ui.input_action_button("calc_button", "Calculate", style="margin-top: 20px; width: 30%;"),
+        ui.h3("Calculation Results", style="margin-top: 20px; text-align: center;"),
     ui.layout_columns(
         ui.card(
             ui.h3("Profit"),
@@ -39,16 +47,12 @@ app_ui = ui.page_fluid(
             ui.output_text_verbatim("sum_after_tax", placeholder=True),
         ),
         ),
-
         ui.output_plot("plot"),
     ),
     style="text-align: center;width:80%;margin-left:10%;"
     ),
-    theme=shinyswatch.theme.cosmo(),
-
+    theme=shinyswatch.theme.flatly(),
     )
-
-
 def server(input, output, session):
     shinyswatch.theme_picker_server()
 
