@@ -1,13 +1,9 @@
-
-
 .control-label{
     display: none;
-
 }
-
-
 .collapse{
-     margin-left: 70%;
-
-
+    margin-left: 70%;
+}
+#shinyswatch_picker_warning{
+    display: none;
 }

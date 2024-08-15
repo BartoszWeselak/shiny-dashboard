@@ -1,17 +1,26 @@
+from operator import iconcat
+from pathlib import Path
+
 from shiny import App, render, ui, reactive
 import shinyswatch
 import matplotlib.pyplot as plt
+import faicons
 
 currency="zł"
 tax_rate=0.19
 app_ui = ui.page_fluid(
     ui.include_css("styles.css"),
+
     ui.page_navbar(
-        ui.nav_panel(ui.div( shinyswatch.theme_picker_ui(), style="text-align: center;text-decoration:none")),
+
+        ui.nav_panel(
+        shinyswatch.theme_picker_ui(),
+               ),
         title="DepositPol",
         id="page",
     ),
     ui.div(
+
     ui.panel_well(
         ui.h2("Interest Calculation Dashboard", style="text-align: center; margin-bottom: 30px;"),
     ),
@@ -105,6 +114,10 @@ def server(input, output, session):
         ax.set_title('Value Distribution')
         return fig
 
+    @render.image
+    def icon():
+        img = {"src": "calculator.png","width":"10%"}
+        return img
 
 def calc_profit(deposit, interest_rate,period_months):
     capitalization = 12
