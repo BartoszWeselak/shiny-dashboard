@@ -7,3 +7,6 @@
 #shinyswatch_picker_warning{
     display: none;
 }
+.container-fluid{
+    padding: 0;
+}
