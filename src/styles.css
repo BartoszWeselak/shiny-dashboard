@@ -2,11 +2,14 @@
     display: none;
 }
 .collapse{
-    margin-left: 70%;
+    margin-left: 60%;
 }
 #shinyswatch_picker_warning{
     display: none;
 }
 .container-fluid{
     padding: 0;
+}
+.navbar-brand {
+    margin-left:5%;
 }

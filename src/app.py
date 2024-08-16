@@ -8,7 +8,7 @@ tax_rates = [
     ["PL", 0.19, "zł"],
     ["USA", 0.24, "USD"],
     ["FR", 0.30, "EUR"],
-    ["DE", 0.26375, "EUR"],
+    ["GER", 0.26, "EUR"],
 ]
 app_ui = ui.page_fluid(
     ui.include_css("styles.css"),
